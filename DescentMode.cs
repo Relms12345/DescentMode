@@ -88,15 +88,15 @@ namespace DescentMode
                 Fields[nameof(offsetZ)].uiControlEditor.onFieldChanged += CoMOffsetChanged;
             }
 
-            Actions[nameof(Toggle)].active = ConfiguredForDescentMode;
-            Events[nameof(ToggleMode)].active = ConfiguredForDescentMode;
+            Actions[nameof(Toggle)].active = true;
+            Events[nameof(ToggleMode)].active = true;
 
             Fields[nameof(offsetPercent)].guiActive = ConfiguredForDescentMode;
             Fields[nameof(offsetPercent)].guiActiveEditor = ConfiguredForDescentMode;
 
-            Fields[nameof(offsetX)].guiActiveEditor = !ConfiguredForDescentMode;
-            Fields[nameof(offsetY)].guiActiveEditor = !ConfiguredForDescentMode;
-            Fields[nameof(offsetZ)].guiActiveEditor = !ConfiguredForDescentMode;
+            Fields[nameof(offsetX)].guiActiveEditor = true;
+            Fields[nameof(offsetY)].guiActiveEditor = true;
+            Fields[nameof(offsetZ)].guiActiveEditor = true;
         }
 
         protected void OffsetPercentChanged(BaseField bf, object o) => UpdateCoM();
@@ -114,7 +114,7 @@ namespace DescentMode
             if (ConfiguredForDescentMode)
                 part.CoMOffset += IsDescentMode ? DescentModeCoM * offsetPercent : Vector3.zero;
             else
-                part.CoMOffset += new Vector3(offsetX / 100, offsetY / 100, offsetZ / 100);
+                part.CoMOffset += IsDescentMode ? new Vector3(offsetX / 100, offsetY / 100, offsetZ / 100) : Vector3.zero;
 
             comString = $"({part.CoMOffset.x:F2},{part.CoMOffset.y:F2},{part.CoMOffset.z:F2})";
         }
